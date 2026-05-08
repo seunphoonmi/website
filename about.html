@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — sellIT.ng</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:        #0A3D8F;
+    --blue-mid:    #1457C8;
+    --blue-light:  #4A90E2;
+    --orange:      #F7680B;
+    --orange-glow: #FF8C3B;
+    --black:       #0D0D0D;
+    --off-black:   #111827;
+    --white:       #F9F9F9;
+    --muted:       rgba(249,249,249,0.55);
+    --border:      rgba(255,255,255,0.07);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::after {
+    content:'';
+    position:fixed; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:999; opacity:.45;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position:fixed; top:0; width:100%; z-index:100;
+    padding:18px 6%;
+    display:flex; justify-content:space-between; align-items:center;
+    background:rgba(13,13,13,0.9); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .logo { font-family:'Outfit',sans-serif; font-weight:700; font-size:1.5rem; letter-spacing:1px; color:var(--white); text-decoration:none; }
+  .logo span { color:var(--orange); }
+  .nav-link { color:rgba(249,249,249,0.6); font-size:0.88rem; text-decoration:none; transition:color .2s; }
+  .nav-link:hover { color:var(--orange); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:120px 6% 80px;
+    position:relative; overflow:hidden;
+  }
+
+  .hero-mesh {
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 70% 70% at 80% 30%, rgba(10,61,143,0.4) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 50% at 10% 80%, rgba(247,104,11,0.18) 0%, transparent 60%);
+  }
+
+  /* Diagonal stripe accent */
+  .hero-stripe {
+    position:absolute;
+    width:4px; height:160%;
+    background:linear-gradient(to bottom, transparent, var(--orange), transparent);
+    top:-30%; right:32%;
+    transform:rotate(-15deg);
+    opacity:.18;
+  }
+  .hero-stripe:nth-child(2) { right:28%; opacity:.10; width:2px; }
+
+  .hero-content { position:relative; z-index:2; max-width:820px; }
+
+  .eyebrow {
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:.72rem; font-weight:600; letter-spacing:3px; text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:28px;
+    opacity:0; animation:fadeUp .6s .2s forwards;
+  }
+  .eyebrow::before { content:''; width:32px; height:2px; background:var(--orange); }
+
+  .hero h1 {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(3rem, 8vw, 6.5rem);
+    font-weight:900;
+    line-height:1.0;
+    letter-spacing:-1px;
+    margin-bottom:30px;
+    opacity:0; animation:fadeUp .7s .35s forwards;
+  }
+  .hero h1 em { color:var(--orange); font-style:italic; }
+  .hero h1 .blue-word { color:var(--blue-light); }
+
+  .hero-lead {
+    font-size:1.15rem; font-weight:300; line-height:1.85;
+    color:var(--muted); max-width:580px; margin-bottom:50px;
+    opacity:0; animation:fadeUp .7s .5s forwards;
+  }
+
+  .hero-stat-row {
+    display:flex; gap:48px; flex-wrap:wrap;
+    opacity:0; animation:fadeUp .7s .65s forwards;
+  }
+  .stat { }
+  .stat-val {
+    font-family:'Playfair Display', serif;
+    font-size:2.6rem; font-weight:700;
+    color:var(--orange); display:block; line-height:1;
+  }
+  .stat-desc { font-size:.78rem; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-top:4px; }
+
+  /* ── STORY SECTION ── */
+  .story {
+    padding:110px 6%;
+    display:grid; grid-template-columns:1fr 1fr; gap:80px;
+    align-items:center;
+  }
+
+  .story-visual {
+    position:relative;
+  }
+
+  .story-card {
+    background:var(--off-black);
+    border:1px solid var(--border);
+    padding:48px 44px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .story-card::before {
+    content:'';
+    position:absolute; top:0; left:0;
+    width:100%; height:4px;
+    background:linear-gradient(90deg, var(--orange), var(--blue-mid));
+  }
+
+  .quote-mark {
+    font-family:'Playfair Display', serif;
+    font-size:8rem; line-height:1;
+    color:rgba(247,104,11,0.15);
+    position:absolute; top:-10px; left:24px;
+    pointer-events:none;
+  }
+
+  .story-quote {
+    font-family:'Playfair Display', serif;
+    font-size:1.35rem; font-style:italic; font-weight:700;
+    line-height:1.65; color:var(--white);
+    position:relative; z-index:1;
+    margin-bottom:28px;
+  }
+
+  .story-attr {
+    font-size:.82rem; font-weight:600;
+    letter-spacing:2px; text-transform:uppercase;
+    color:var(--orange);
+  }
+
+  /* Floating accent shape */
+  .story-accent {
+    position:absolute;
+    bottom:-24px; right:-24px;
+    width:140px; height:140px;
+    background:var(--blue);
+    opacity:.25;
+    z-index:0;
+  }
+
+  .section-tag { font-size:.72rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--orange); display:block; margin-bottom:14px; }
+  .section-title { font-family:'Playfair Display', serif; font-size:clamp(2rem,4.5vw,3.4rem); font-weight:900; line-height:1.1; margin-bottom:22px; }
+  .section-body { font-size:1.02rem; font-weight:300; color:var(--muted); line-height:1.85; }
+
+  /* ── MISSION / VALUES ── */
+  .values {
+    background:linear-gradient(160deg, #080F1E 0%, var(--black) 100%);
+    padding:110px 6%;
+    position:relative; overflow:hidden;
+  }
+
+  .values::before {
+    content:'';
+    position:absolute; top:-300px; right:-200px;
+    width:700px; height:700px; border-radius:50%;
+    background:radial-gradient(circle, rgba(10,61,143,.25) 0%, transparent 70%);
+  }
+
+  .values-header { max-width:540px; margin-bottom:72px; }
+
+  .values-grid {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+    background:rgba(255,255,255,.04);
+    position:relative; z-index:1;
+  }
+
+  .value-card {
+    background:var(--black);
+    padding:44px 38px;
+    position:relative; overflow:hidden;
+    transition:background .3s;
+  }
+  .value-card:hover { background:#141414; }
+
+  .value-card::after {
+    content:'';
+    position:absolute; bottom:0; left:0;
+    width:100%; height:3px;
+    background:var(--orange);
+    transform:scaleX(0); transform-origin:left;
+    transition:transform .35s;
+  }
+  .value-card:hover::after { transform:scaleX(1); }
+
+  .value-icon { font-size:2.2rem; margin-bottom:20px; display:block; }
+  .value-card h3 {
+    font-family:'Outfit', sans-serif; font-weight:700; font-size:1.05rem;
+    margin-bottom:12px; color:var(--white);
+  }
+  .value-card p { font-size:.9rem; color:var(--muted); line-height:1.75; }
+
+  /* ── FOUNDER SECTION ── */
+  .founder {
+    padding:110px 6%;
+    display:grid; grid-template-columns:5fr 7fr; gap:80px;
+    align-items:start;
+  }
+
+  .founder-portrait {
+    position:relative;
+  }
+
+  .portrait-frame {
+    width:100%; aspect-ratio:3/4;
+    background:var(--off-black);
+    border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+  }
+
+  .portrait-placeholder {
+    width:100%; height:100%;
+    background:linear-gradient(135deg, var(--blue) 0%, var(--off-black) 60%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:16px;
+  }
+
+  .portrait-initials {
+    font-family:'Playfair Display', serif;
+    font-size:5rem; font-weight:900;
+    color:var(--white); letter-spacing:4px;
+    opacity:.85;
+  }
+
+  .portrait-name-tag {
+    font-size:.75rem; font-weight:600; letter-spacing:3px;
+    text-transform:uppercase; color:rgba(255,255,255,.5);
+  }
+
+  /* Orange corner accent */
+  .portrait-frame::before {
+    content:'';
+    position:absolute; top:0; left:0;
+    width:60px; height:60px;
+    background:var(--orange);
+    clip-path:polygon(0 0, 100% 0, 0 100%);
+  }
+
+  /* Blue bottom-right accent */
+  .portrait-frame::after {
+    content:'';
+    position:absolute; bottom:0; right:0;
+    width:80px; height:80px;
+    background:var(--blue);
+    clip-path:polygon(100% 0, 100% 100%, 0 100%);
+  }
+
+  .founder-tag {
+    position:absolute;
+    bottom:-20px; right:-20px;
+    background:var(--orange);
+    padding:14px 22px;
+    font-weight:700; font-size:.82rem;
+    letter-spacing:2px; text-transform:uppercase;
+    color:var(--white); z-index:2;
+  }
+
+  .founder-content { }
+
+  .founder-name {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(2.2rem,4vw,3rem);
+    font-weight:900; line-height:1.1;
+    margin-bottom:8px;
+  }
+
+  .founder-title {
+    font-size:.85rem; font-weight:600; letter-spacing:3px;
+    text-transform:uppercase; color:var(--orange);
+    margin-bottom:32px; display:block;
+  }
+
+  .founder-bio {
+    font-size:1.02rem; font-weight:300; color:var(--muted);
+    line-height:1.9; margin-bottom:44px;
+  }
+
+  .founder-bio p + p { margin-top:18px; }
+
+  .founder-highlights {
+    display:grid; grid-template-columns:1fr 1fr; gap:16px;
+    margin-bottom:44px;
+  }
+
+  .highlight {
+    background:var(--off-black);
+    border:1px solid var(--border);
+    padding:20px 22px;
+    position:relative;
+    transition:border-color .25s;
+  }
+  .highlight:hover { border-color:rgba(247,104,11,.4); }
+
+  .highlight::before {
+    content:''; position:absolute; left:0; top:0;
+    width:3px; height:100%;
+    background:var(--blue-mid);
+  }
+
+  .highlight h4 { font-size:.82rem; font-weight:700; color:var(--orange); margin-bottom:4px; letter-spacing:.5px; }
+  .highlight p { font-size:.85rem; color:var(--muted); line-height:1.6; }
+
+  .founder-contact {
+    display:flex; gap:14px; flex-wrap:wrap;
+  }
+
+  .contact-pill {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 22px;
+    font-size:.85rem; font-weight:600;
+    text-decoration:none; border:1px solid var(--border);
+    color:var(--white); transition:all .25s;
+  }
+  .contact-pill.primary { background:var(--orange); border-color:var(--orange); }
+  .contact-pill.primary:hover { background:var(--orange-glow); transform:translateY(-2px); }
+  .contact-pill:not(.primary):hover { border-color:var(--orange); color:var(--orange); }
+
+  /* ── MISSION STRIP ── */
+  .mission-strip {
+    background:var(--blue);
+    padding:72px 6%;
+    position:relative; overflow:hidden;
+    display:flex; align-items:center; gap:60px; flex-wrap:wrap;
+  }
+
+  .mission-strip::after {
+    content:'SELL IT';
+    position:absolute; right:-20px; top:-30px;
+    font-family:'Playfair Display', serif;
+    font-size:9rem; font-weight:900; letter-spacing:10px;
+    color:rgba(255,255,255,.04); pointer-events:none;
+  }
+
+  .mission-strip::before {
+    content:'';
+    position:absolute; top:0; left:0; width:100%; height:4px;
+    background:var(--orange);
+  }
+
+  .mission-label {
+    font-size:.72rem; font-weight:700; letter-spacing:4px;
+    text-transform:uppercase; color:rgba(255,255,255,.6);
+    margin-bottom:10px; display:block;
+  }
+
+  .mission-text {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(1.6rem,3.5vw,2.6rem);
+    font-weight:700; line-height:1.3;
+    max-width:700px; position:relative; z-index:1;
+  }
+
+  .mission-text em { color:var(--orange); font-style:italic; }
+
+  /* ── TEAM / WHAT WE STAND FOR ── */
+  .stand-for {
+    padding:110px 6%;
+    background:linear-gradient(180deg, var(--black) 0%, #080F1E 100%);
+  }
+
+  .stand-grid {
+    display:grid; grid-template-columns:repeat(2,1fr); gap:32px;
+    margin-top:60px;
+  }
+
+  .stand-card {
+    padding:44px 40px;
+    border:1px solid var(--border);
+    position:relative; overflow:hidden;
+    transition:all .3s;
+  }
+  .stand-card:hover { border-color:rgba(247,104,11,.35); transform:translateY(-4px); }
+
+  .stand-num {
+    font-family:'Playfair Display', serif;
+    font-size:5rem; font-weight:900;
+    color:rgba(10,61,143,.25); line-height:1;
+    position:absolute; right:20px; top:10px;
+  }
+
+  .stand-card h3 {
+    font-family:'Playfair Display', serif;
+    font-size:1.4rem; font-weight:700;
+    margin-bottom:14px; color:var(--white);
+    position:relative; z-index:1;
+  }
+
+  .stand-card p {
+    font-size:.95rem; color:var(--muted); line-height:1.8;
+    position:relative; z-index:1;
+  }
+
+  /* ── CTA ── */
+  .cta {
+    margin:0 6% 80px;
+    background:var(--off-black);
+    border:1px solid var(--border);
+    padding:72px 60px;
+    display:flex; justify-content:space-between;
+    align-items:center; gap:40px; flex-wrap:wrap;
+    position:relative; overflow:hidden;
+  }
+
+  .cta::before {
+    content:''; position:absolute; left:0; top:0;
+    width:100%; height:4px;
+    background:linear-gradient(90deg, var(--orange), var(--blue-mid), var(--orange));
+  }
+
+  .cta-text h2 {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(1.8rem,3.5vw,2.8rem);
+    font-weight:900; line-height:1.2; margin-bottom:12px;
+  }
+  .cta-text h2 em { color:var(--orange); font-style:italic; }
+  .cta-text p { color:var(--muted); font-size:1rem; max-width:420px; line-height:1.7; }
+
+  .cta-btn {
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--orange); color:var(--white);
+    font-family:'Outfit',sans-serif; font-weight:700; font-size:.95rem;
+    padding:18px 38px; text-decoration:none;
+    transition:all .25s; white-space:nowrap;
+  }
+  .cta-btn:hover { background:var(--orange-glow); transform:translateY(-2px); box-shadow:0 8px 30px rgba(247,104,11,.4); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top:1px solid var(--border);
+    padding:36px 6%;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+  }
+  .f-logo { font-family:'Outfit',sans-serif; font-weight:700; font-size:1.4rem; color:var(--white); }
+  .f-logo span { color:var(--orange); }
+  footer p { font-size:.8rem; color:rgba(249,249,249,.3); }
+
+  /* ── REVEAL ── */
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .75s, transform .75s; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(22px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:960px){
+    .story { grid-template-columns:1fr; gap:50px; }
+    .founder { grid-template-columns:1fr; gap:50px; }
+    .portrait-frame { aspect-ratio:4/3; }
+    .values-grid { grid-template-columns:1fr; }
+    .stand-grid { grid-template-columns:1fr; }
+    .cta { flex-direction:column; padding:50px 32px; }
+  }
+  @media(max-width:600px){
+    .hero-stat-row { gap:28px; }
+    .founder-highlights { grid-template-columns:1fr; }
+    .mission-strip { flex-direction:column; gap:16px; }
+    footer { flex-direction:column; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">sell<span>IT</span>.ng</a>
+  <a href="https://wa.me/2349034993452" class="nav-link">Get in Touch →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-stripe"></div>
+  <div class="hero-stripe"></div>
+
+  <div class="hero-content">
+    <div class="eyebrow">Our Story</div>
+    <h1>We Help Nigeria's<br><em>Hardest Workers</em><br><span class="blue-word">Sell Further.</span></h1>
+    <p class="hero-lead">sellIT.ng was born from one simple observation — Nigeria is full of talented business owners who are invisible online. We exist to change that, one business at a time.</p>
+    <div class="hero-stat-row">
+      <div class="stat">
+        <span class="stat-val">3</span>
+        <span class="stat-desc">Days to go live</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">100%</span>
+        <span class="stat-desc">Done for you</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">₦0</span>
+        <span class="stat-desc">Tool costs per client</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story">
+  <div class="story-visual reveal">
+    <div class="story-card">
+      <span class="quote-mark">"</span>
+      <p class="story-quote">"There are millions of Nigerians with real skills — tailors, caterers, photographers — who are only known on their street. The internet was supposed to open doors for everyone. We make sure it does."</p>
+      <span class="story-attr">— Oluwaseun Ogunseye, Founder</span>
+    </div>
+    <div class="story-accent"></div>
+  </div>
+
+  <div class="reveal">
+    <span class="section-tag">How It Started</span>
+    <h2 class="section-title">A Problem We Couldn't Ignore</h2>
+    <p class="section-body">sellIT.ng started with a simple question: why do so many talented small business owners in Nigeria remain unknown outside their immediate neighbourhood — not because of lack of skill, but simply because they don't have an online presence?</p>
+    <br>
+    <p class="section-body">The answer was always the same. It felt technical. It felt expensive. It felt like something for "big businesses." We disagreed. So we built a service that does it all for them — affordably, quickly, and completely.</p>
+    <br>
+    <p class="section-body">Today, sellIT.ng sets up the full digital presence of Nigerian service providers in 3 days or less, so they can start reaching customers across Lagos, Abuja, Kano, Port Harcourt — and beyond.</p>
+  </div>
+</section>
+
+<!-- MISSION STRIP -->
+<div class="mission-strip">
+  <div>
+    <span class="mission-label">Our Mission</span>
+    <p class="mission-text">"To make every Nigerian small business <em>discoverable, sellable,</em> and unstoppable online."</p>
+  </div>
+</div>
+
+<!-- VALUES -->
+<section class="values">
+  <div class="values-header reveal">
+    <span class="section-tag">What We Believe</span>
+    <h2 class="section-title">Values That Drive Everything We Do</h2>
+    <p class="section-body">These aren't slogans on a wall. They're the decisions we make every day for every client.</p>
+  </div>
+
+  <div class="values-grid">
+    <div class="value-card reveal">
+      <span class="value-icon">🤝</span>
+      <h3>Accessibility First</h3>
+      <p>Powerful digital tools and strategy shouldn't be reserved for businesses with big budgets. We believe every hustler deserves a real online presence.</p>
+    </div>
+    <div class="value-card reveal">
+      <span class="value-icon">⚡</span>
+      <h3>Speed Without Shortcuts</h3>
+      <p>We move fast — 3-day setups — but never at the cost of quality. Every page, every profile, every catalog is built to impress.</p>
+    </div>
+    <div class="value-card reveal">
+      <span class="value-icon">🇳🇬</span>
+      <h3>Built for Nigeria</h3>
+      <p>We understand Nigerian consumer behaviour, local platforms, and what resonates in markets from Lagos Island to Kano. This isn't a foreign template — it's local expertise.</p>
+    </div>
+    <div class="value-card reveal">
+      <span class="value-icon">💡</span>
+      <h3>Empowerment Over Dependency</h3>
+      <p>We don't lock clients into endless retainers. We set you up, hand it over, and make sure you understand what you have.</p>
+    </div>
+    <div class="value-card reveal">
+      <span class="value-icon">🎯</span>
+      <h3>Results That Matter</h3>
+      <p>Our success is measured in new customers reached, orders received, and businesses that have outgrown their street — not vanity metrics.</p>
+    </div>
+    <div class="value-card reveal">
+      <span class="value-icon">🔒</span>
+      <h3>Honest & Transparent</h3>
+      <p>No hidden fees, no confusing contracts. What you see in our packages is exactly what you get. Plain and simple.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder">
+  <div class="founder-portrait reveal">
+    <div class="portrait-frame">
+      <div class="portrait-placeholder">
+        <span class="portrait-initials">OO</span>
+        <span class="portrait-name-tag">Oluwaseun Ogunseye</span>
+      </div>
+    </div>
+    <div class="founder-tag">Founder & CEO</div>
+  </div>
+
+  <div class="founder-content reveal">
+    <span class="section-tag">Meet the Founder</span>
+    <h2 class="founder-name">Oluwaseun<br>Ogunseye</h2>
+    <span class="founder-title">Founder & Chief Executive Officer</span>
+
+    <div class="founder-bio">
+      <p>Oluwaseun Ogunseye is a digital marketing strategist and entrepreneur with deep expertise in the Nigerian digital advertising landscape. With years of experience running campaigns, building brand identities, and driving growth for businesses across multiple industries, he understood early that the biggest gap in Nigeria's market wasn't talent — it was visibility.</p>
+      <p>After seeing countless skilled business owners struggle to reach customers beyond their immediate communities, Oluwaseun founded sellIT.ng with a clear mandate: make digital presence accessible, affordable, and done-for-you for every Nigerian service provider.</p>
+      <p>His approach combines sharp marketing strategy with a genuine understanding of Nigerian culture, consumer behaviour, and the platforms where Nigerians actually spend their time. sellIT.ng is his answer to the question he couldn't stop asking — "Why isn't this business online yet?"</p>
+    </div>
+
+    <div class="founder-highlights">
+      <div class="highlight">
+        <h4>Background</h4>
+        <p>Digital marketing & media buying, Nigerian market specialist</p>
+      </div>
+      <div class="highlight">
+        <h4>Focus</h4>
+        <p>SME digital growth, brand development, campaign strategy</p>
+      </div>
+      <div class="highlight">
+        <h4>Vision</h4>
+        <p>Every Nigerian business owner selling beyond their street</p>
+      </div>
+      <div class="highlight">
+        <h4>Based In</h4>
+        <p>Nigeria — serving businesses nationwide</p>
+      </div>
+    </div>
+
+    <div class="founder-contact">
+      <a href="https://wa.me/2349034993452?text=Hello%20Oluwaseun%2C%20I%27d%20like%20to%20connect" class="contact-pill primary" target="_blank">
+        📱 Chat on WhatsApp
+      </a>
+      <a href="mailto:hello@sellit.ng" class="contact-pill">
+        ✉️ hello@sellit.ng
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE STAND FOR -->
+<section class="stand-for">
+  <div class="reveal">
+    <span class="section-tag">Our Commitments</span>
+    <h2 class="section-title">What We Stand For</h2>
+  </div>
+
+  <div class="stand-grid">
+    <div class="stand-card reveal">
+      <span class="stand-num">01</span>
+      <h3>The Nigerian Hustle Deserves a Stage</h3>
+      <p>The tailor in Yaba, the caterer in Surulere, the makeup artist in Enugu — they all deserve to be found by the customers who need them. We are that bridge.</p>
+    </div>
+    <div class="stand-card reveal">
+      <span class="stand-num">02</span>
+      <h3>Affordable Is Not a Compromise</h3>
+      <p>Keeping our packages accessible is a deliberate choice. We built our process to be efficient so the cost savings go to the business owner, not our margins.</p>
+    </div>
+    <div class="stand-card reveal">
+      <span class="stand-num">03</span>
+      <h3>Speed Is Respect</h3>
+      <p>When a business owner trusts us with their digital future, we don't make them wait weeks. Three days means three days. We respect their time as much as they do.</p>
+    </div>
+    <div class="stand-card reveal">
+      <span class="stand-num">04</span>
+      <h3>Nigeria Is Our Market and Our Pride</h3>
+      <p>We are not adapting a foreign model to Nigeria. We built this for Nigeria — understanding the culture, the platforms, the preferences, and the potential.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta reveal">
+  <div class="cta-text">
+    <h2>Ready to Work With <em>sellIT.ng?</em></h2>
+    <p>Get your free digital audit today. We'll show you exactly what your business needs to start selling beyond your street.</p>
+  </div>
+  <a href="https://wa.me/2349034993452?text=Hello%20sellIT.ng%2C%20I%20want%20a%20free%20digital%20audit" class="cta-btn" target="_blank">
+    📱 Get a Free Audit
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">sell<span>IT</span>.ng</div>
+  <p>📍 Nigeria &nbsp;|&nbsp; hello@sellit.ng &nbsp;|&nbsp; wa.me/2349034993452</p>
+  <p style="font-style:italic;color:rgba(249,249,249,.2);">Sell Beyond Your Street.</p>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if(e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 90);
+    });
+  }, { threshold: 0.08 });
+  els.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
